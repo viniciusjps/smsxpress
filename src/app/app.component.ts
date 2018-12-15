@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'smsxpress';
+
+  /**
+   * Scroll To
+   * @param id Target ID
+   */
+  public scroll(id) {
+    const target = document.getElementById(id);
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
 }

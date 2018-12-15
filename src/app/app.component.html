@@ -1,9 +1,9 @@
 <div class="ui menu">
   <div class="ui container">
-    <a class="item" href="#about">
+    <a class="item" (click)="scroll('about')">
       Sobre
     </a>
-    <a class="item" href="#send">
+    <a class="item" (click)="scroll('send')">
       Enviar sms
     </a>
     <div class="right menu">
@@ -15,7 +15,7 @@
   </div>
 </div>
 <div>
-  <app-about id="about"></app-about>
+  <app-about id="about" #about></app-about>
   <br>
-  <app-send-sms id="send" ></app-send-sms>
+  <app-send-sms id="send" #send></app-send-sms>
 </div>
