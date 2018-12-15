@@ -1,65 +1,113 @@
-<div style="height: 100vh;">
-  <div *ngIf="sendSms" @enterLeave>
-    <h2 class="ui center aligned icon header">
-      <i class="circular paper plane icon"></i>
-      <div class="content">
-        Envie seu sms
-        <div class="sub header">preencha os campos abaixo</div>
-      </div>
-    </h2>
-    <br>
-    <div class="ui column relaxed centered grid">
-      <div class="eight wide column">
-        <div class="ui form">
-          <div class="field">
-            <label>
-              <i class="share icon"></i>
-              Nº do(s) telefone(s) &nbsp;
-              <span class="ui small pointing below red label" *ngIf="phoneAlert" @alertInOut>
-                Telefone(s) inválido(s)! preencha conforme o exemplo: "(83)98765-1234"
-              </span>
-            </label>
-            <textarea placeholder="(10)55555-0000 (11)55555-4444" [(ngModel)]="phones.value" style="margin:2px" rows="2"
-              #phones></textarea>
-          </div>
-          <div class="field">
-            <label>
-              <i class="edit icon"></i>
-              Mensagem &nbsp;
-              <span class="ui small pointing below yellow label" *ngIf="textAlert" @alertInOut>
-                Esse campo não pode ser vazio
-              </span>
-            </label>
-            <textarea placeholder="Digite sua mensagem" style="margin:2px" rows="3" [(ngModel)]="text.value" #text></textarea>
+<div>
+  <!-- New sms scene -->
+  <div *ngIf="sendSms && !calculatingPrice" style="height: 100vh; background: ghostwhite" @enterLeave>
+    <div class="ui container">
+      <div class="ui column very relaxed stackable centered grid">
+        <div class="middle aligned row" style="height: 90vh;">
+          <div class="ten wide column">
+            <h2 class="ui center aligned icon header">
+              <i class="circular paper plane green icon"></i>
+              <div class="content">
+                Envie seu sms
+                <div class="sub header">preenchendo os campos abaixo</div>
+              </div>
+            </h2>
+            <br>
+            <div class="ui form">
+              <div class="field">
+                <label>
+                  <i class="share icon"></i>
+                  Nº do(s) telefone(s) &nbsp;
+                  <span class="ui small pointing below red label" *ngIf="phoneAlert" @alertInOut>
+                    Telefone(s) inválido(s)! preencha conforme o exemplo: "(00)55555-4444"
+                  </span>
+                </label>
+                <textarea placeholder="(10)55555-0000 (11)55555-4444" [(ngModel)]="phonesNumbers" style="margin:2px"
+                  rows="2" #phones></textarea>
+              </div>
+              <div class="field">
+                <label>
+                  <i class="edit icon"></i>
+                  Mensagem &nbsp;
+                  <span class="ui small pointing below yellow label" *ngIf="textAlert" @alertInOut>
+                    Esse campo não pode ser vazio
+                  </span>
+                </label>
+                <textarea placeholder="Digite sua mensagem" style="margin:2px" rows="3" [(ngModel)]="smsText" #text></textarea>
+              </div>
+            </div>
+            <br>
+            <button class="ui green fluid button" (click)="continue(phones.value, text.value)" [disabled]="!((text.value.length !== 0) && (phones.value.length !== 0))">
+              continuar
+            </button>
           </div>
         </div>
-        <br>
-        <button class="ui blue fluid button" (click)="continue(phones.value, text.value)" [disabled]="!((text.value.length !== 0) && (phones.value.length !== 0))">
-          continuar
-        </button>
       </div>
     </div>
   </div>
-  <div *ngIf="!sendSms && !calculatingPrice" @enterLeave>
-    <div class="ui center aligned icon header">
-      <div class="ui active centered inline big loader"></div>
+  <!-- Calculating pricing scene -->
+  <div *ngIf="calculatingPrice && !sendSms" style="height: 100vh; background: -webkit-linear-gradient(270deg, #ffffff 40%, #cecece 150%)" @enterLeave>
+    <div class="ui column very relaxed stackable centered grid">
+      <div class="middle aligned row" style="height: 90vh;">
+        <div class="column">
+          <h2 class="ui center aligned icon header">
+            <i class="circular shopping cart icon"></i>
+            <div class="content">
+              Custo por envio
+              <div class="sub header">da mensagem de texto</div>
+              <br>
+              <p>{{ smsPrice | currency: 'BRL' }} </p>
+            </div>
+          </h2>
+          <div class="ui center aligned header">
+            <div class="ui buttons">
+              <button class="ui green button large active" (click)="confirmShipping()">Confirmar envio</button>
+              <div class="or" data-text="ou"></div>
+              <button class="ui large button" (click)="undoState()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="calculatingPrice" @enterLeave>
-    <h2 class="ui center aligned icon header">
-      <i class="circular shopping cart icon"></i>
-      <div class="content">
-        Custo por envio
-        <div class="sub header">da mensagem de texto</div>
-        <br>
-        <p>{{ smsPrice | currency: 'BRL' }} </p>
+  <!-- Final scene -->
+  <div *ngIf="sendSms && calculatingPrice" style="height: 100vh; background: ghostwhite" @enterLeave>
+    <div class="ui column very relaxed stackable centered grid">
+      <div class="middle aligned row" style="height: 90vh;">
+        <div class="column">
+          <h2 class="ui center aligned icon header">
+            <i class="circular check green icon"></i>
+            <div class="content">
+              Parabéns!
+              <div class="sub header">Seu SMS foi enviado com sucesso</div>
+            </div>
+          </h2>
+          <div class="ui center aligned header">
+            <h3>
+              Esse é o nº do seu protocolo:
+              <h1>
+                {{ protocol }}
+                <p class="sub header">Guarde este número para eventuais consultas</p>
+              </h1>
+            </h3>
+            <br>
+            <button class="ui blue large button" (click)="sendNewSms()">Enviar um novo sms</button>
+          </div>
+        </div>
       </div>
-    </h2>
-    <div class="ui center aligned header">
-      <div class="ui buttons">
-        <button class="ui green button large active">Confirmar envio</button>
-        <div class="or" data-text="ou"></div>
-        <button class="ui large button" (click)="undoState()">Cancelar</button>
+    </div>
+  </div>
+  <!-- Loading -->
+  <div *ngIf="!sendSms && !calculatingPrice" style="height: 100vh; background: white" @enterLeave>
+    <div class="ui container">
+      <div class="ui middle aligned grid">
+        <div class="middle aligned row" style="height: 90vh;">
+          <div class="column">
+            <div class="ui center aligned icon header">
+              <div class="ui active centered inline big loader"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

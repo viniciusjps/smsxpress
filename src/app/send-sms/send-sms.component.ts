@@ -5,6 +5,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import axios from 'axios';
 
 @Component({
   selector: 'app-send-sms',
@@ -22,11 +23,11 @@ import {
     ]),
     trigger('enterLeave', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('200ms', style({ opacity: 1, height: '*' })),
+        style({ opacity: 0, transform: 'translateX(-100%)' }),
+        animate('200ms', style({ opacity: 1, height: '*', transform: 'translateX(0%)' })),
       ]),
       transition(':leave', [
-        animate('200ms', style({ opacity: 0 }))
+        animate('100ms', style({ opacity: 0, transform: 'translateX(100%)' }))
       ])
     ])
   ]
@@ -39,6 +40,9 @@ export class SendSmsComponent implements OnInit {
 
   // Data
   private smsPrice: number;
+  private phonesNumbers: string[];
+  private smsText: string;
+  private protocol: string;
 
   // States
   private sendSms: boolean;
@@ -54,6 +58,9 @@ export class SendSmsComponent implements OnInit {
 
   ngOnInit() {
     this.smsPrice = 0;
+    this.phonesNumbers = [];
+    this.smsText = '';
+    this.protocol = '';
   }
 
   /**
@@ -110,9 +117,11 @@ export class SendSmsComponent implements OnInit {
     if (this.validateText(text) && this.validatePhones(phones)) {
       this.sendSms = false;
       this.smsPrice = this.calculatePrice(phones.split(' '), text);
+      this.phonesNumbers = phones.split(' ');
+      this.smsText = text;
       setTimeout(() => {
         this.calculatingPrice = true;
-      }, 1300);
+      }, 800);
     } else {
       this.showAlerts(phones, text);
     }
@@ -137,7 +146,37 @@ export class SendSmsComponent implements OnInit {
     this.calculatingPrice = false;
     setTimeout(() => {
       this.sendSms = true;
-    }, 900);
+    }, 800);
+  }
+
+  public async confirmShipping(): Promise<any> {
+    this.calculatingPrice = false;
+    await axios.post('https://api-smsxpress.herokuapp.com/api/sms/send', {
+      to: this.phonesNumbers,
+      text: this.smsText,
+      from: '+5583987462980'
+    })
+      .then((res) => {
+        this.protocol = res.data.protocol;
+        this.sendSms = true;
+        this.calculatingPrice = true;
+      })
+      .catch((error) => {
+        this.sendSms = false;
+      });
+  }
+
+  public sendNewSms() {
+    this.clearData();
+    this.sendSms = false;
+    this.undoState();
+  }
+
+  private clearData() {
+    this.smsPrice = 0;
+    this.smsText = '';
+    this.phonesNumbers = [];
+    this.protocol = '';
   }
 
 }
