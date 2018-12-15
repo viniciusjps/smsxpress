@@ -7,7 +7,7 @@
       Enviar sms
     </a>
     <div class="right menu">
-      <a class="item">
+      <a class="item" (click)="consult()">
         <i class="search link icon"></i>
         Consultas
       </a>
@@ -18,4 +18,6 @@
   <app-about id="about" #about></app-about>
   <br>
   <app-send-sms id="send" #send></app-send-sms>
+  <br>
+  <app-search></app-search>
 </div>

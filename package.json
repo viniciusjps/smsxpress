@@ -24,6 +24,7 @@
     "core-js": "^2.5.4",
     "rxjs": "~6.2.0",
     "semantic-ui-css": "^2.4.1",
+    "sweetalert": "^2.1.2",
     "twilio": "^3.25.0",
     "zone.js": "~0.8.26"
   },
