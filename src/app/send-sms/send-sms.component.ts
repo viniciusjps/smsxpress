@@ -35,8 +35,8 @@ import axios from 'axios';
 export class SendSmsComponent implements OnInit {
 
   // Alerts labels
-  private textAlert: boolean;
-  private phoneAlert: boolean;
+  public textAlert: boolean;
+  public phoneAlert: boolean;
 
   // Data
   private smsPrice: number;
@@ -45,8 +45,8 @@ export class SendSmsComponent implements OnInit {
   private protocol: string;
 
   // States
-  private sendSms: boolean;
-  private calculatingPrice: boolean;
+  public sendSms: boolean;
+  public calculatingPrice: boolean;
 
   constructor() {
     this.textAlert = false;

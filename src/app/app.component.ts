@@ -27,8 +27,8 @@ import axios from 'axios';
 export class AppComponent implements OnInit {
 
   // Actions scenes modal
-  private search: boolean;
-  private result: boolean;
+  public search: boolean;
+  public result: boolean;
 
   // Data
   private text: string;
