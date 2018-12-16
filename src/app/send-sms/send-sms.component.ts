@@ -76,7 +76,7 @@ export class SendSmsComponent implements OnInit {
    * @param value phones
    */
   private validatePhones(value: string): boolean {
-    const regex = /\(\d{2}\)\d{5}-\d{4}/;
+    const regex = /\(\d{2}\)\d{5}-\d{4}$/;
     const phones = value.split(' ');
     let vality = true;
     phones.map(item => {
@@ -154,7 +154,7 @@ export class SendSmsComponent implements OnInit {
     await axios.post('https://api-smsxpress.herokuapp.com/api/sms/send', {
       to: this.phonesNumbers,
       text: this.smsText,
-      from: '+5583987462980'
+      from: '+19805332276'
     })
       .then((res) => {
         this.protocol = res.data.protocol;
