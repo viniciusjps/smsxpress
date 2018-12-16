@@ -1,0 +1,18 @@
+.middle.aligned.row {
+	height: 100vh;
+}
+
+#scene {
+	height: 100vh; 
+	background: ghostwhite;
+}
+
+#price {
+	height: 100vh; 
+	background: -webkit-linear-gradient(270deg, #ffffff 40%, #cecece 150%);
+}
+
+#loading {
+	height: 100vh; 
+	background: white;
+}

@@ -10,7 +10,7 @@
       Enviar sms
     </a>
     <div class="right menu">
-      <a class="item" (click)="consult()">
+      <a class="item" (click)="frame.show()">
         <i class="search link icon"></i>
         Consultas
       </a>
@@ -21,6 +21,65 @@
   <app-about id="about" #about></app-about>
   <br>
   <app-send-sms id="send" #send></app-send-sms>
-  <br>
+  <!-- Modal search -->
+  <div>
+    <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h1 class="ui header">
+              Consultas
+              <h2 class="ui sub header" *ngIf="!search && !result" @enterLeave>Informe o número do seu protocolo</h2>
+              <h2 class="ui sub header" *ngIf="search && result" @enterLeave>Protocolo nº {{ value }}</h2>
+            </h1>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- Init search -->
+            <input class="ui input" placeholder="0000-1111-2222"
+              [(ngModel)]="value" #protocol
+              *ngIf="!search && !result" @enterLeave>
+          <!-- Show result -->
+          <div *ngIf="search && result" style="margin: 20px;" @enterLeave>
+            <div>
+              <div class="ui large label">
+                Mensagem
+              </div>
+              <p style="margin: 3px;"> {{ text || '' }} </p>
+            </div>
+            <br>
+            <div>
+              <div class="ui large label">
+                Destinatário(s)
+              </div>
+              <p style="margin: 3px;" *ngFor="let phone of to"> {{ phone || '' }} </p>
+            </div>
+            <br>
+            <div>
+              <span class="item">
+                <i class="clock outline icon"></i>
+                Enviado em {{ createdAt || '' }}
+              </span>
+            </div>
+          </div>
+          <!-- Not found -->
+          <div *ngIf="!search && result" @enterLeave>
+            <h4 style="margin: 20px;">
+              Mensagem não encontrada
+              <p>Verifique o número do seu protocolo</p>
+            </h4>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button class="ui green button" (click)="consult()" [disabled]="!validInput()" *ngIf="!search && !result" @enterLeave>confirmar</button>
+            <button class="ui loading button" *ngIf="search && !result">loading</button>
+            <button class="ui blue button" (click)="newSearch()" *ngIf="(search && result) || (!search && result)" @enterLeave>nova consulta</button>
+            <button class="ui button" (click)="frame.hide()" *ngIf="search && result" @enterLeave>fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <app-footer></app-footer>
 </div>

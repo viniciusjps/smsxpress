@@ -1,0 +1,24 @@
+.modal-content {
+	border-radius: 10px;
+}
+
+.ui.header {
+	text-align: left;
+  margin: 5px;
+}
+
+.ui.input {
+  text-align: center;
+  margin: 15px;
+  height: 35px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 1px #c2c2c2;
+  border-width: 0px;
+  font-size: 1.5rem;
+	background-color: ghostwhite;
+}
+
+.modal-footer.d-flex.justify-content-center {
+	background: #f0f0f0;
+	border-radius: 10px;
+}

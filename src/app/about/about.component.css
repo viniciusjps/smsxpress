@@ -1,0 +1,27 @@
+#scene {
+	height: 100vh; 
+  background: url('https://i.imgur.com/afTDapm.jpg'); 
+  background-size: cover;
+}
+
+#logo {
+	background: rgba(46, 63, 34, 0.5); 
+	border: 2.5px solid #ffffff; 
+	border-radius: 12px;
+}
+
+.middle.aligned.row {
+	height: 100vh;
+}
+
+.ui.right.aligned.header {
+	margin-top: 40px; 
+	color: white; 
+	text-shadow: 0 2px 6px black;
+}
+
+.ui.sub.header {
+	text-shadow: 0 1px 7px rgb(39, 26, 26); 
+	font-size: 1.5rem; 
+	color: white;
+}

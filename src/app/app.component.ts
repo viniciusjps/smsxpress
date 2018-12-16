@@ -1,12 +1,48 @@
-import { Component } from '@angular/core';
-import swal from 'sweetalert';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+  trigger,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
+import axios from 'axios';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('enterLeave', [
+      transition(':enter', [
+        style({ opacity: 0, height: 0 }),
+        animate('200ms', style({ opacity: 1, height: '*' })),
+      ]),
+      transition(':leave', [
+        animate('200ms', style({ opacity: 0, height: '0' }))
+      ])
+    ])
+  ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  // Actions scenes modal
+  private search: boolean;
+  private result: boolean;
+
+  // Data
+  private text: string;
+  private to: string[];
+  private createdAt: string;
+
+  // Aux data
+  private value: string;
+
+  ngOnInit() {
+    this.search = false;
+    this.result = false;
+    this.value = '';
+  }
 
   /**
    * Scroll To
@@ -17,57 +53,31 @@ export class AppComponent {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  public consult(value): void {
-    swal({
-      text: 'Informe o número do protocolo',
-      content: {
-        element: 'input',
-        attributes: {
-          placeholder: '0000-1111-2222'
-        }
-      },
-      icon: 'info',
-      button: {
-        text: 'Consultar',
-        closeModal: false,
-        className: 'ui green button'
-      }
-    })
-      .then(protocol => {
-        if (!protocol) {
-          throw null;
-        }
-        return fetch('https://api-smsxpress.herokuapp.com/api/sms/' + protocol);
-      })
-      .then(res => {
-        return res.json();
-      })
-      .then(json => {
-        let text = 'Mensagem: ' + json.text + '\n\n';
-        text += 'Destinatários: \n';
-        json.to.map(phone => {
-          text += phone + '\n';
+  public async consult(): Promise<any> {
+    if (this.value !== undefined && this.value !== '') {
+      this.search = true;
+      await axios.get('https://api-smsxpress.herokuapp.com/api/sms/' + this.value)
+        .then(res => {
+          this.result = true;
+          this.text = res.data[0].text;
+          this.to = res.data[0].to;
+          const date = new Date(res.data[0].createdAt);
+          this.createdAt = date.toLocaleDateString() + ' às ' + date.toLocaleTimeString();
+        }).catch(error => {
+          this.search = false;
+          this.result = true;
         });
-        const date = new Date(json.createdAt);
-        text += '\n' + 'Enviado em ' + date.toLocaleDateString();
-        swal({
-          title: 'Nº ' + json.protocol,
-          text: text,
-          button: {
-            text: 'fechar',
-            closeModal: true,
-            className: 'ui blue button'
-          }
-        });
-      })
-      .catch(error => {
-        if (error) {
-          swal('Ops', 'Verifique o número do seu protocolo', 'error');
-        } else {
-          swal.stopLoading();
-          swal.close();
-        }
-      });
+    }
+  }
+
+  public newSearch(): void {
+    this.search = false;
+    this.result = false;
+    this.value = '';
+  }
+
+  public validInput(): boolean {
+    return /\d{4}-\d{4}-\d{4}$/.test(this.value);
   }
 
 }

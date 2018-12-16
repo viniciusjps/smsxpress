@@ -1,12 +1,12 @@
 <div>
   <!-- New sms scene -->
-  <div *ngIf="sendSms && !calculatingPrice" style="height: 100vh; background: ghostwhite" @enterLeave>
+  <div id="scene" *ngIf="sendSms && !calculatingPrice" @enterLeave>
     <div class="ui container">
       <div class="ui column very relaxed stackable centered grid">
-        <div class="middle aligned row" style="height: 90vh;">
+        <div class="middle aligned row">
           <div class="ten wide column">
             <h2 class="ui center aligned icon header">
-              <i class="circular paper plane green icon"></i>
+              <i class="circular paper plane icon"></i>
               <div class="content">
                 Envie seu sms
                 <div class="sub header">preenchendo os campos abaixo</div>
@@ -46,9 +46,9 @@
     </div>
   </div>
   <!-- Calculating pricing scene -->
-  <div *ngIf="calculatingPrice && !sendSms" style="height: 100vh; background: -webkit-linear-gradient(270deg, #ffffff 40%, #cecece 150%)" @enterLeave>
+  <div id="price" *ngIf="calculatingPrice && !sendSms" @enterLeave>
     <div class="ui column very relaxed stackable centered grid">
-      <div class="middle aligned row" style="height: 90vh;">
+      <div class="middle aligned row">
         <div class="column">
           <h2 class="ui center aligned icon header">
             <i class="circular shopping cart icon"></i>
@@ -71,12 +71,12 @@
     </div>
   </div>
   <!-- Final scene -->
-  <div *ngIf="sendSms && calculatingPrice" style="height: 100vh; background: ghostwhite" @enterLeave>
+  <div id="scene" *ngIf="sendSms && calculatingPrice" @enterLeave>
     <div class="ui column very relaxed stackable centered grid">
-      <div class="middle aligned row" style="height: 90vh;">
+      <div class="middle aligned row">
         <div class="column">
           <h2 class="ui center aligned icon header">
-            <i class="circular check green icon"></i>
+            <i class="circular check icon"></i>
             <div class="content">
               Parabéns!
               <div class="sub header">Seu SMS foi enviado com sucesso</div>
@@ -98,10 +98,10 @@
     </div>
   </div>
   <!-- Loading -->
-  <div *ngIf="!sendSms && !calculatingPrice" style="height: 100vh; background: white" @enterLeave>
+  <div id="loading" *ngIf="!sendSms && !calculatingPrice" @enterLeave>
     <div class="ui container">
       <div class="ui middle aligned grid">
-        <div class="middle aligned row" style="height: 90vh;">
+        <div class="middle aligned row">
           <div class="column">
             <div class="ui center aligned icon header">
               <div class="ui active centered inline big loader"></div>
