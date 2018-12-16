@@ -63,7 +63,7 @@
             <div class="ui buttons">
               <button class="ui green button large active" (click)="confirmShipping()">Confirmar envio</button>
               <div class="or" data-text="ou"></div>
-              <button class="ui large button" (click)="undoState()">Cancelar</button>
+              <button class="ui large button" (click)="undoState(); clearData();">Cancelar</button>
             </div>
           </div>
         </div>

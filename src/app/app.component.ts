@@ -53,6 +53,9 @@ export class AppComponent implements OnInit {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  /**
+   * Make an Inquiry
+   */
   public async consult(): Promise<any> {
     if (this.value !== undefined && this.value !== '') {
       this.search = true;
@@ -70,14 +73,20 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /**
+   * Prepare environment for new research
+   */
   public newSearch(): void {
     this.search = false;
     this.result = false;
     this.value = '';
   }
 
+  /**
+   * Validate protocol entry
+   */
   public validInput(): boolean {
-    return /\d{4}-\d{4}-\d{4}$/.test(this.value);
+    return /^\d{4}-\d{4}-\d{4}$/.test(this.value);
   }
 
 }

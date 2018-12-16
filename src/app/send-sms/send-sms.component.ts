@@ -39,10 +39,10 @@ export class SendSmsComponent implements OnInit {
   public phoneAlert: boolean;
 
   // Data
-  private smsPrice: number;
-  private phonesNumbers: string[];
-  private smsText: string;
-  private protocol: string;
+  public smsPrice: number;
+  public phonesNumbers: string[];
+  public smsText: string;
+  public protocol: string;
 
   // States
   public sendSms: boolean;
@@ -76,7 +76,7 @@ export class SendSmsComponent implements OnInit {
    * @param value phones
    */
   private validatePhones(value: string): boolean {
-    const regex = /\(\d{2}\)\d{5}-\d{4}$/;
+    const regex = /^\(\d{2}\)\d{5}-\d{4}$/;
     const phones = value.split(' ');
     let vality = true;
     phones.map(item => {
@@ -142,6 +142,9 @@ export class SendSmsComponent implements OnInit {
     return priceTotal;
   }
 
+  /**
+   * Returns to the previous state
+   */
   public undoState(): void {
     this.calculatingPrice = false;
     setTimeout(() => {
@@ -149,6 +152,9 @@ export class SendSmsComponent implements OnInit {
     }, 800);
   }
 
+  /**
+   * Confirm shipping
+   */
   public async confirmShipping(): Promise<any> {
     this.calculatingPrice = false;
     await axios.post('https://api-smsxpress.herokuapp.com/api/sms/send', {
@@ -166,12 +172,18 @@ export class SendSmsComponent implements OnInit {
       });
   }
 
+  /**
+   * Prepares the environment for a new shipment
+   */
   public sendNewSms() {
     this.clearData();
     this.sendSms = false;
     this.undoState();
   }
 
+  /**
+   * Clear data
+   */
   private clearData() {
     this.smsPrice = 0;
     this.smsText = '';

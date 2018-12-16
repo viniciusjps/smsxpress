@@ -25,7 +25,7 @@
   <div>
     <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
       aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header text-center">
             <h1 class="ui header">
@@ -33,7 +33,7 @@
               <h2 class="ui sub header" *ngIf="!search && !result" @enterLeave>Informe o número do seu protocolo</h2>
               <h2 class="ui sub header" *ngIf="search && result" @enterLeave>Protocolo nº {{ value }}</h2>
             </h1>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide(); newSearch();">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -75,7 +75,7 @@
             <button class="ui green button" (click)="consult()" [disabled]="!validInput()" *ngIf="!search && !result" @enterLeave>confirmar</button>
             <button class="ui loading button" *ngIf="search && !result">loading</button>
             <button class="ui blue button" (click)="newSearch()" *ngIf="(search && result) || (!search && result)" @enterLeave>nova consulta</button>
-            <button class="ui button" (click)="frame.hide()" *ngIf="search && result" @enterLeave>fechar</button>
+            <button class="ui button" (click)="frame.hide(); newSearch();" *ngIf="search && result" @enterLeave>fechar</button>
           </div>
         </div>
       </div>
