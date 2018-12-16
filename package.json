@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/router": "^6.1.0",
     "axios": "^0.18.0",
     "core-js": "^2.5.4",
+    "express": "^4.16.4",
     "rxjs": "~6.2.0",
     "semantic-ui-css": "^2.4.1",
     "sweetalert": "^2.1.2",
