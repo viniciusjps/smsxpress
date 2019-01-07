@@ -5,7 +5,7 @@
 <hr>
 O SMS Xpress é um pequeno projeto single page, que oferece o serviço de envio de mensagens de texto por demanda de um jeito fácil e rápido. Sendo necessário que o usuário apenas informe os números de destino e a mensagem. Uma vez concluída, o usuário recebe um número de protocolo que poderá utilizar para conferir os detalhes do envio no painel de consultas.
 
-[confira](https://smsxpresss.herokuapp.com/)
+[confira](https://smsxpress.netlify.com/)
 
 ## Tecnologias
 Para a elaboração, foi utilizado: 
