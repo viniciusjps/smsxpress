@@ -25,7 +25,7 @@
     "@types/chart.js": "^2.7.41",
     "angular-bootstrap-md": "^7.1.0",
     "angular5-csv": "^0.2.10",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chart.js": "^2.5.0",
     "core-js": "^2.5.4",
     "express": "^4.16.4",
