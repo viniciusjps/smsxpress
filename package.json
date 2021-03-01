@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "~6.2.4",
     "@angular/animations": "^6.1.0",
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
