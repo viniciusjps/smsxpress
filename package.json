@@ -28,7 +28,7 @@
     "axios": "^0.18.0",
     "chart.js": "^2.5.0",
     "core-js": "^2.5.4",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.2.0",
